@@ -86,12 +86,12 @@ local font = gfx.font.new("gfx/font")
 gfx.setLineWidth(2)
 gfx.setFont(font)
 
---[[
+
 playdate.graphics.sprite.setBackgroundDrawingCallback(function() 
-    gfx.setDrawOffset(math.random(-1,1) * shake, math.random(-1,1) * shake + yOffset)
+    gfx.setDrawOffset(0,yOffset)
     imgTile:drawTiled(0,0,400,240) 
 end)
-]]
+
 local menu = playdate.getSystemMenu()
 menu:addMenuItem("restart", function() die() end)
 menu:addCheckmarkMenuItem("night mode", function(value) playdate.display.setInverted(value) end)
@@ -196,7 +196,7 @@ function updateGame()
     -- if player is overlapping a square, move it
     if #sprSquare:overlappingSprites() > 0 then
         local spr = sprSquare:overlappingSprites()[1]
-        if spr.width == 34 and spr.height == 38 then
+        if spr.width == 34 and spr.height == 42 then
             collectCube(pos)
         end
     end
@@ -257,8 +257,8 @@ function updateGame()
             flipped = playdate.graphics.kImageFlippedX 
         end
 
-        animEnemy:draw(enemy.x,enemy.y, flipped)
-        sprEnemies:moveTo(enemy.x,enemy.y)
+        animEnemy:draw(enemy.x-2,enemy.y, flipped)
+        sprEnemies:moveTo(enemy.x-2,enemy.y)
         
         -- death
         if #sprEnemies:overlappingSprites() > 0  and #sprSquare:overlappingSprites() == 0 then
@@ -283,7 +283,7 @@ function updateGame()
         gfx.fillCircleAtPoint(sprSquare.x,sprSquare.y,math.sin(cubeCirc/10) * 19)
     end
 
-    imgSecurity:draw(200-42,120-38)
+    imgSecurity:draw(200-44,120-40)
 
     -- overlay
     gfx.setDrawOffset(0,0)
